@@ -10,10 +10,10 @@ void to_grayscale(unsigned char *buffer_in, unsigned char *buffer_out, unsigned 
         {
             int index = (y * width + x) * 4;
             int average = (int)(buffer_in[index] + buffer_in[index + 1] + buffer_in[index + 2]) / 3;
-            buffer_out[index] = average; // RED
+            buffer_out[index] = average;     // RED
             buffer_out[index + 1] = average; // GREEN
             buffer_out[index + 2] = average; // BLUE
-            buffer_out[index + 3] = 255; // ALPHA
+            buffer_out[index + 3] = 255;     // ALPHA
         }
     }
 }

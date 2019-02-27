@@ -1,0 +1,15 @@
+<html>
+<head>
+  <script src="add.js"></script>
+  <script>
+      Module.onRuntimeInitialized = _ => {
+        const add = Module.cwrap('add', 'number', 'number');
+        console.log(add(89, 29))
+        document.getElementById("result").innerText = add(89, 29)
+      }
+  </script>
+</head>
+<body>
+    <div id="result"></div>
+</body>
+</html>
