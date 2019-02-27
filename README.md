@@ -21,7 +21,7 @@ source "/Path/to/emsdk/emsdk_env.sh"
 # Compile
 
 ```
-emcc bwfilter.c -o bwfilter.js
+emcc filter.c -o filter.js
 ```
 
 ```
