@@ -8,7 +8,7 @@
     <title>WebAssembly</title>
 
     <link rel="stylesheet" href="slides/css/reveal.css">
-    <link rel="stylesheet" href="slides/css/theme/serif.css">
+    <link rel="stylesheet" href="slides/css/theme/robot-lung.css">
 
     <!-- Theme used for syntax highlighting of code -->
     <link rel="stylesheet" href="slides/lib/css/zenburn.css">
@@ -36,32 +36,37 @@
                 <h2>What is WebAssembly?</h2>
             </section>
             <section>
-                <b>High performance, low-level bytecode for the web</b>
+                <p>High performance, low-level bytecode for the web</p>
             </section>
             <section>
                 <section>
+                    <h2>Goals</h2>
                     <ul>
-                        <li>WAT (text format)</li>
-                        <li>WASM (compact binary format)</li>
+                        <li class="fragment grow">Enables code reusability between native and web</li>
+                        <li class="fragment grow">Bring second life to legacy code</li>
                     </ul>
                 </section>
                 <section>
-                    <b>Hello World in WAT</b>
-                    <pre>
-                        <code>
+                    <h2>Format</h2>
+                    <ul>
+                        <li class="fragment grow">WAT (text format)</li>
+                        <li class="fragment grow">WASM (compact binary format)</li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>Hello World in WAT</h2>
+                    <pre><code class="hljs" data-trim contenteditable>
 (module
     (func (result i32)
         (i32.const 42)
     )
     (export "helloWorld" (func 0))
 )
-                            </code>
-                        </pre>
+                    </code></pre>
                     <pre><code>wat2wasm hello.wat -o hello.wasm</code></pre>
                 </section>
                 <section>
-                    <pre>
-                            <code>
+                    <pre><code class="hljs" data-trim contenteditable>
 const { readFileSync } = require("fs");
 
 const run = async () => {
@@ -72,14 +77,17 @@ const run = async () => {
 };
 
 run().catch(console.error);
-                            </code>
-                        </pre>
+                            </code></pre>
                 </section>
             </section>
             <section>
                 <section>
-                    <b>Low-level bytecode</b>
-                    <img src="img/role.png">
+                    <p>Low-level bytecode</p>
+                    <img src="slides/img/role.png">
+                </section>
+                <section>
+                    <p>V8 Engine</p>
+                    <img src="slides/img/v8engine.png">
                 </section>
                 <section>
                     <ul>
@@ -90,24 +98,66 @@ run().catch(console.error);
             </section>
             <section>
                 <section>
-                    <b>Compilation target for low-level languages</b>
-                    <img src="img/designed.png">
+                    <p>Compilation target for low-level languages</p>
+                    <img src="slides/img/designed.png">
                 </section>
                 <section>
-                    Some languages that support WASM compilation:
-                    <p>
-                        <b>C/C++, Rust, C#/.NET, Java, Python, Elixir, Go, PHP</b>
-                    </p>
-                    <i>source: <a href="https://github.com/appcypher/awesome-wasm-langs">https://github.com/appcypher/awesome-wasm-langs</a></i>
+                    <p>Some languages that support WASM compilation</p>
+                    <ul>
+                        <li>C/C++</li>
+                        <li>Rust</li>
+                        <li>Java</li>
+                        <li>Python</li>
+                        <li>Elixir</li>
+                        <li>Go</li>
+                        <li>PHP</li>
+                    </ul>
+                    <p>source: <a href="https://github.com/appcypher/awesome-wasm-langs">https://github.com/appcypher/awesome-wasm-langs</a></p>
                 </section>
                 <section>
-                    <img src="img/HaAnh.jpg" />
+                    <img src="slides/img/HaAnh.jpg" />
                 </section>
             </section>
             <section>
-
+                <h1>Emscripten</h1>
+                <p>LLVM-to-JavaScript compiler.</p>
             </section>
+            <section>
+                <h1>Install Emscripten</h1>
+                <p>Download <a href="https://github.com/emscripten-core/emsdk">https://github.com/emscripten-core/emsdk</a></p>
+                <pre>
+# Download and install the latest SDK tools.
+./emsdk install latest
+
+# Make the "latest" SDK "active" for the current user. (writes ~/.emscripten file)
+./emsdk activate latest
+
+source ./emsdk_env.sh
+                </pre>
+            </section>
+            <section>
+                <h2>Convert RBGA image to grayscale</h2>
+                <table>
+                    <tr>
+                        <td> <img src="slides/img/rick-morty.png" alt=""></td>
+                        <td><img src="slides/img/rick-morty-grayscale.png" alt=""></td>
+                    </tr>
+                </table>
+            </section>
+            <section>
+              <p>filter.c</p>
+              <img src="slides/img/filter.png">
+            </section>
+            <section>
+                <p>main.js</p>
+                <img src="slides/img/filterjs.png">
+              </section>
         </div>
+
+        <!-- <div class="line top"></div>
+        <div class="line bottom"></div>
+        <div class="line left"></div>
+        <div class="line right"></div> -->
     </div>
 
     <script src="slides/lib/js/head.min.js"></script>
@@ -118,6 +168,10 @@ run().catch(console.error);
         // - https://github.com/hakimel/reveal.js#configuration
         // - https://github.com/hakimel/reveal.js#dependencies
         Reveal.initialize({
+            controls: true,
+            progress: true,
+            history: true,
+            center: true,
             dependencies: [{
                     src: 'slides/plugin/markdown/marked.js'
                 },
