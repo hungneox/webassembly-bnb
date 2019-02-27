@@ -12,16 +12,18 @@ Donwload [emsdk](https://github.com/emscripten-core/emsdk)
 source ./emsdk_env.sh
 ```
 
-```
-emcc filter.c -o filter.js
-```
+Add to .zshrc
 
 ```
-emcc -s "EXTRA_EXPORTED_RUNTIME_METHODS=['cwrap']" -s EXPORTED_FUNCTIONS="['_to_grayscale']" -s WASM=1 -o filter.js  filter.c
+source "/Path/to/emsdk/emsdk_env.sh"
 ```
 
 # Compile
 
 ```
 emcc bwfilter.c -o bwfilter.js
+```
+
+```
+emcc -s "EXTRA_EXPORTED_RUNTIME_METHODS=['cwrap']" -s EXPORTED_FUNCTIONS="['_to_grayscale']" -s WASM=1 -o filter.js  filter.c
 ```
