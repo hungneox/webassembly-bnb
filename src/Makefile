@@ -4,4 +4,4 @@ filter.js: filter.c
 	emcc filter.c -o filter.js
 
 clean:
-	rm *.js *.wasm
+	rm filter.js filter.wasm
