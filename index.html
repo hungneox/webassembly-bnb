@@ -1,0 +1,143 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>WebAssembly</title>
+
+    <link rel="stylesheet" href="slides/css/reveal.css">
+    <link rel="stylesheet" href="slides/css/theme/serif.css">
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="slides/lib/css/zenburn.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+</head>
+
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <section>
+                <h2>Hello WebAssembly!</h2>
+                <p>
+                    <small><a href="http://koodibar.com">@hungneox</a></small>
+                </p>
+            </section>
+            <section>
+                <h2>What is WebAssembly?</h2>
+            </section>
+            <section>
+                <b>High performance, low-level bytecode for the web</b>
+            </section>
+            <section>
+                <section>
+                    <ul>
+                        <li>WAT (text format)</li>
+                        <li>WASM (compact binary format)</li>
+                    </ul>
+                </section>
+                <section>
+                    <b>Hello World in WAT</b>
+                    <pre>
+                        <code>
+(module
+    (func (result i32)
+        (i32.const 42)
+    )
+    (export "helloWorld" (func 0))
+)
+                            </code>
+                        </pre>
+                    <pre><code>wat2wasm hello.wat -o hello.wasm</code></pre>
+                </section>
+                <section>
+                    <pre>
+                            <code>
+const { readFileSync } = require("fs");
+
+const run = async () => {
+    const buffer = readFileSync("./hello.wasm");
+    const module =  await WebAssembly.compile(buffer);
+    const instance = await WebAssembly.instantiate(module, {});
+    console.log(instance.exports.hello()); // 42
+};
+
+run().catch(console.error);
+                            </code>
+                        </pre>
+                </section>
+            </section>
+            <section>
+                <section>
+                    <b>Low-level bytecode</b>
+                    <img src="img/role.png">
+                </section>
+                <section>
+                    <ul>
+                        <li>WebAssembly != Language that compiled to JavaScript</li>
+                        <li>WASM run directly on JIT compiler</li>
+                    </ul>
+                </section>
+            </section>
+            <section>
+                <section>
+                    <b>Compilation target for low-level languages</b>
+                    <img src="img/designed.png">
+                </section>
+                <section>
+                    Some languages that support WASM compilation:
+                    <p>
+                        <b>C/C++, Rust, C#/.NET, Java, Python, Elixir, Go, PHP</b>
+                    </p>
+                    <i>source: <a href="https://github.com/appcypher/awesome-wasm-langs">https://github.com/appcypher/awesome-wasm-langs</a></i>
+                </section>
+                <section>
+                    <img src="img/HaAnh.jpg" />
+                </section>
+            </section>
+            <section>
+
+            </section>
+        </div>
+    </div>
+
+    <script src="slides/lib/js/head.min.js"></script>
+    <script src="slides/js/reveal.js"></script>
+
+    <script>
+        // More info about config & dependencies:
+        // - https://github.com/hakimel/reveal.js#configuration
+        // - https://github.com/hakimel/reveal.js#dependencies
+        Reveal.initialize({
+            dependencies: [{
+                    src: 'slides/plugin/markdown/marked.js'
+                },
+                {
+                    src: 'slides/plugin/markdown/markdown.js'
+                },
+                {
+                    src: 'slides/plugin/notes/notes.js',
+                    async: true
+                },
+                {
+                    src: 'slides/plugin/highlight/highlight.js',
+                    async: true,
+                    callback: function () {
+                        hljs.initHighlightingOnLoad();
+                    }
+                }
+            ]
+        });
+    </script>
+</body>
+
+</html>
