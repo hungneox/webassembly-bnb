@@ -1,160 +1,181 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
     <title>WebAssembly</title>
 
-    <link rel="stylesheet" href="slides/css/reveal.css">
-    <link rel="stylesheet" href="slides/css/theme/robot-lung.css">
+    <link rel="stylesheet" href="slides/css/reveal.css" />
+    <link rel="stylesheet" href="slides/css/theme/robot-lung.css" />
 
     <!-- Theme used for syntax highlighting of code -->
-    <link rel="stylesheet" href="slides/lib/css/zenburn.css">
+    <link rel="stylesheet" href="slides/lib/css/zenburn.css" />
 
     <!-- Printing and PDF exports -->
     <script>
-        var link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.type = 'text/css';
-        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
-        document.getElementsByTagName('head')[0].appendChild(link);
+      var link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.type = "text/css";
+      link.href = window.location.search.match(/print-pdf/gi) ? "css/print/pdf.css" : "css/print/paper.css";
+      document.getElementsByTagName("head")[0].appendChild(link);
     </script>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="reveal">
-        <div class="slides">
-            <section>
-                <h2>Hello WebAssembly!</h2>
-                <p>
-                    <small><a href="http://koodibar.com">@hungneox</a></small>
-                </p>
-            </section>
-            <section>
-                <h2>What is WebAssembly?</h2>
-            </section>
-            <section>
-                <p>High performance, low-level bytecode for the web</p>
-            </section>
-            <section>
-                <section>
-                    <h2>Goals</h2>
-                    <ul>
-                        <li class="fragment grow">Enables code reusability between native and web</li>
-                        <li class="fragment grow">Bring second life to legacy code</li>
-                    </ul>
-                </section>
-                <section>
-                    <h2>Format</h2>
-                    <ul>
-                        <li class="fragment grow">WAT (text format)</li>
-                        <li class="fragment grow">WASM (compact binary format)</li>
-                    </ul>
-                </section>
-                <section>
-                    <h2>Hello World in WAT</h2>
-                    <pre><code class="hljs" data-trim contenteditable>
+      <div class="slides">
+        <section>
+          <h2>Hello WebAssembly!</h2>
+          <p>
+            <small><a href="http://koodibar.com">@hungneox</a></small>
+          </p>
+        </section>
+        <section>
+          <h2>What is WebAssembly?</h2>
+        </section>
+        <section>
+          <p>High performance, low-level bytecode for the web</p>
+        </section>
+        <section>
+            <p>Supprted by all major browsers</p>
+            <img src="slides/img/browsers.png"/>
+        </section>
+        <section>
+          <section>
+            <h2>Goals</h2>
+            <ul>
+              <li class="fragment grow">Enables code reusability between native and web</li>
+              <li class="fragment grow">Bring second life to legacy code</li>
+            </ul>
+          </section>
+          <section>
+              <img height="150" src="slides/img/opencv.png">
+              <img height="150" src="slides/img/autocad.png">
+          </section>
+          <section>
+            <h1>Demo OpenCV.js</h1>
+          </section>
+        </section>
+        <section>
+          <section>
+            <p>Low-level bytecode</p>
+            <img src="slides/img/role.png" />
+          </section>
+          <section>
+            <p>V8 Engine</p>
+            <img height="500px" src="slides/img/v8engine.png" />
+          </section>
+          <section>
+            <ul>
+              <li>WebAssembly != Language that compiled to JavaScript</li>
+              <li>WASM run directly on JIT compiler</li>
+            </ul>
+          </section>
+        </section>
+        <section>
+          <section>
+            <p>Compilation target for low-level languages</p>
+            <img height="500px" src="slides/img/designed.png" />
+          </section>
+          <section>
+            <p>Some languages that support WASM compilation</p>
+            <p>
+              <a>C/C++</a> - <a>Rust</a> - <a>Java</a> - <a>Python</a> - <a>Elixir</a> - <a>Go</a> -
+              <a>PHP</a>
+            </p>
+            <p>
+              source:
+              <a href="https://github.com/appcypher/awesome-wasm-langs"
+                >https://github.com/appcypher/awesome-wasm-langs</a
+              >
+            </p>
+          </section>
+          <section>
+            <img height="500px" src="slides/img/HaAnh.jpg" />
+          </section>
+        </section>
+        <section>
+          <section>
+            <h2>Format</h2>
+            <p>
+              <a>WAT (text format)</a> -
+              <a>WASM (compact binary format)</a>
+            </p>
+            <img src="slides/img/wat-wasm.png" />
+          </section>
+          <section>
+            <h2>Add function in WAT</h2>
+            <pre><code class="hljs" data-trim contenteditable>
 (module
-    (func (result i32)
-        (i32.const 42)
-    )
-    (export "helloWorld" (func 0))
-)
+  (func $add (param i32 i32)
+    (result i32)
+    (i32.add 
+      (get_local 0)
+      (get_local 1)))
+  (export "add" (func 0)))
                     </code></pre>
-                    <pre><code>wat2wasm hello.wat -o hello.wasm</code></pre>
-                </section>
-                <section>
-                    <pre><code class="hljs" data-trim contenteditable>
+            <pre><code>wat2wasm hello.wat -o hello.wasm</code></pre>
+          </section>
+          <section>
+            <pre><code class="hljs" data-trim contenteditable>
 const { readFileSync } = require("fs");
 
+// wat2wasm add.wat -o add.wasm
 const run = async () => {
-    const buffer = readFileSync("./hello.wasm");
-    const module =  await WebAssembly.compile(buffer);
-    const instance = await WebAssembly.instantiate(module, {});
-    console.log(instance.exports.hello()); // 42
+  const buffer = readFileSync("./add.wasm");
+  const module =  await WebAssembly.compile(buffer);
+  const instance = await WebAssembly.instantiate(module, {});
+  console.log(instance.exports.add(40, 2));
 };
 
 run().catch(console.error);
                             </code></pre>
-                </section>
-            </section>
-            <section>
-                <section>
-                    <p>Low-level bytecode</p>
-                    <img src="slides/img/role.png">
-                </section>
-                <section>
-                    <p>V8 Engine</p>
-                    <img src="slides/img/v8engine.png">
-                </section>
-                <section>
-                    <ul>
-                        <li>WebAssembly != Language that compiled to JavaScript</li>
-                        <li>WASM run directly on JIT compiler</li>
-                    </ul>
-                </section>
-            </section>
-            <section>
-                <section>
-                    <p>Compilation target for low-level languages</p>
-                    <img src="slides/img/designed.png">
-                </section>
-                <section>
-                    <p>Some languages that support WASM compilation</p>
-                    <ul>
-                        <li>C/C++</li>
-                        <li>Rust</li>
-                        <li>Java</li>
-                        <li>Python</li>
-                        <li>Elixir</li>
-                        <li>Go</li>
-                        <li>PHP</li>
-                    </ul>
-                    <p>source: <a href="https://github.com/appcypher/awesome-wasm-langs">https://github.com/appcypher/awesome-wasm-langs</a></p>
-                </section>
-                <section>
-                    <img src="slides/img/HaAnh.jpg" />
-                </section>
-            </section>
-            <section>
-                <h1>Emscripten</h1>
-                <p>LLVM-to-JavaScript compiler.</p>
-            </section>
-            <section>
-                <h1>Install Emscripten</h1>
-                <p>Download <a href="https://github.com/emscripten-core/emsdk">https://github.com/emscripten-core/emsdk</a></p>
-                <pre>
+          </section>
+        </section>
+        <section>
+          <h1>Emscripten</h1>
+          <p>LLVM-to-JavaScript compiler.</p>
+        </section>
+        <section>
+          <h1>Install Emscripten</h1>
+          <p>
+            Download <a href="https://github.com/emscripten-core/emsdk">https://github.com/emscripten-core/emsdk</a>
+          </p>
+          <pre><code>
 # Download and install the latest SDK tools.
 ./emsdk install latest
 
-# Make the "latest" SDK "active" for the current user. (writes ~/.emscripten file)
+# Make the "latest" SDK "active" for 
+# the current user. (writes ~/.emscripten file)
 ./emsdk activate latest
 
 source ./emsdk_env.sh
-                </pre>
-            </section>
-            <section>
-                <h2>Convert RBGA image to grayscale</h2>
-                <table>
-                    <tr>
-                        <td> <img src="slides/img/rick-morty.png" alt=""></td>
-                        <td><img src="slides/img/rick-morty-grayscale.png" alt=""></td>
-                    </tr>
-                </table>
-            </section>
-            <section>
-              <p>filter.c</p>
-              <img src="slides/img/filter.png">
-            </section>
-            <section>
-                <p>main.js</p>
-                <img src="slides/img/filterjs.png">
-              </section>
-        </div>
+        </code></pre>
+        </section>
+        <section>
+          <h2>Convert RBGA image to grayscale</h2>
+          <table>
+            <tr>
+              <td><img src="slides/img/rick-morty.png" alt="" /></td>
+              <td><img src="slides/img/rick-morty-grayscale.png" alt="" /></td>
+            </tr>
+          </table>
+        </section>
+        <section>
+          <p>filter.c</p>
+          <img src="slides/img/filter.png" />
+        </section>
+        <section>
+          <p>main.js</p>
+          <img src="slides/img/filterjs.png" />
+        </section>
+        <section>
+          <h1>Demo time!</h1>
+        </section>
+      </div>
 
-        <!-- <div class="line top"></div>
+      <!-- <div class="line top"></div>
         <div class="line bottom"></div>
         <div class="line left"></div>
         <div class="line right"></div> -->
@@ -164,34 +185,34 @@ source ./emsdk_env.sh
     <script src="slides/js/reveal.js"></script>
 
     <script>
-        // More info about config & dependencies:
-        // - https://github.com/hakimel/reveal.js#configuration
-        // - https://github.com/hakimel/reveal.js#dependencies
-        Reveal.initialize({
-            controls: true,
-            progress: true,
-            history: true,
-            center: true,
-            dependencies: [{
-                    src: 'slides/plugin/markdown/marked.js'
-                },
-                {
-                    src: 'slides/plugin/markdown/markdown.js'
-                },
-                {
-                    src: 'slides/plugin/notes/notes.js',
-                    async: true
-                },
-                {
-                    src: 'slides/plugin/highlight/highlight.js',
-                    async: true,
-                    callback: function () {
-                        hljs.initHighlightingOnLoad();
-                    }
-                }
-            ]
-        });
+      // More info about config & dependencies:
+      // - https://github.com/hakimel/reveal.js#configuration
+      // - https://github.com/hakimel/reveal.js#dependencies
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        dependencies: [
+          {
+            src: "slides/plugin/markdown/marked.js"
+          },
+          {
+            src: "slides/plugin/markdown/markdown.js"
+          },
+          {
+            src: "slides/plugin/notes/notes.js",
+            async: true
+          },
+          {
+            src: "slides/plugin/highlight/highlight.js",
+            async: true,
+            callback: function() {
+              hljs.initHighlightingOnLoad();
+            }
+          }
+        ]
+      });
     </script>
-</body>
-
+  </body>
 </html>

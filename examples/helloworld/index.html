@@ -1,0 +1,27 @@
+<html>
+
+<head>
+    <script src="helloworld.js"></script>
+    <script>
+        function utf8ToString(h, p) {
+            let s = "";
+            for (i = p; h[i]; i++) {
+                s += String.fromCharCode(h[i]);
+            }
+            return s;
+        }
+
+        Module.onRuntimeInitialized = _ => {
+            var h = new Uint8Array(Module.buffer);
+            // var p = Module._helloworld();
+            Module._helloworld()
+            // console.log(utf8ToString(h, p));
+        }
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>
